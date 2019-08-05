@@ -19,13 +19,13 @@ class IncrementController extends Controller
     }
     public function input(Request $request)
     {
-        $cekjumlahdata = IncrementModel::all()->count(); // menghitung jumlah data pada table
+        //$cekjumlahdata = IncrementModel::all()->count(); // menghitung jumlah data pada table
         
         
         $input = new IncrementModel();
     
-
-         if($cekjumlahdata % 5 == 0){// jika jumlah data 5 dibagi 5 = 0
+        $cekincrement = IncrementModel::orderBy('created_at', 'DESC')->first(); //memakai data yang terakhir diinput berdasarkan kolom created_at
+         if($cekincrement->kode_unik % 5 == 0){// jika jumlah data 5 dibagi 5 = 0
           
             $input = new IncrementModel();
             $input->kode_unik = 101; //membuat nilai kode unik dengan nilai awal 101
@@ -37,7 +37,7 @@ class IncrementController extends Controller
         
 
         else{
-            $cekincrement = IncrementModel::orderBy('created_at', 'DESC')->first(); //memakai data yang terakhir diinput berdasarkan kolom created_at
+            //$cekincrement = IncrementModel::orderBy('created_at', 'DESC')->first(); //memakai data yang terakhir diinput berdasarkan kolom created_at
             $input->kode_unik = $cekincrement->kode_unik+1;// menjumlah data kode_unik menggunakan data kode_unik sebelumnya
         $input->harga = $request->harga;
         $input->total = $input->kode_unik + $input->harga;
